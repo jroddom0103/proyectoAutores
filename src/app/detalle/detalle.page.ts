@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Autor } from '../autor';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalle',
@@ -19,7 +19,7 @@ export class DetallePage implements OnInit {
     data: {} as Autor
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) { }
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router) { }
 
   ngOnInit() {
 
@@ -40,5 +40,21 @@ export class DetallePage implements OnInit {
       }
     }
     )
+  }
+
+  clicBotonBorrar() {
+    this.firestoreService.borrar("autores", this.id).then(() => {
+      // Limpiar datos de pantalla
+      this.document = {} as Autor;
+      this.router.navigate(['/home']);;
+    })
+  }
+
+  clicBotonModificar() {
+    this.firestoreService.actualizar("autores", this.id, this.document.data).then(() => {
+      // Limpiar datos de pantalla
+      this.document = {} as Autor;
+      this.router.navigate(['/home']);
+    })
   }
 }
