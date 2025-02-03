@@ -1,0 +1,7 @@
+{
+  "name": "tema2-firestore",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

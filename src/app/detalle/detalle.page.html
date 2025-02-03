@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Detalle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información del Autor</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <img src={{document.data.imagenURL}} height="200px" width="200px">
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Nombre Completo:</ion-label>
+        <ion-input value="{{document.data.nombreCompleto}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Lugar de Nacimiento:</ion-label>
+        <ion-input value="{{document.data.lugarNacimiento}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Fecha de Nacimiento:</ion-label>
+        <ion-input value="{{document.data.fechaNacimiento}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Fecha de Defunción:</ion-label>
+        <ion-input value="{{document.data.fechaDefuncion}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Obras Notables:</ion-label>
+        <ion-input value="{{document.data.obrasNotables}}"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-button expand="full" color="danger">Borrar autor</ion-button>
+  <ion-button expand="full" color="secondary">Modificar tarea</ion-button>
+</ion-content>
