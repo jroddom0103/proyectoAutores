@@ -3,12 +3,15 @@ import { FirestoreService } from '../firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Autor } from '../autor';
 import { Router } from '@angular/router';
+import { IonAlert, IonButton } from '@ionic/angular/standalone';
+import type { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.page.html',
   styleUrls: ['./detalle.page.scss'],
-  standalone: false
+  standalone: false,
+  
 })
 
 export class DetallePage implements OnInit {
@@ -70,12 +73,38 @@ export class DetallePage implements OnInit {
     });
   }
 
-  clicBotonBorrar() {
-    this.firestoreService.borrar("autores", this.id).then(() => {
-      // Limpiar datos de pantalla
+  async clicBotonBorrar() {
+    try {
+      await this.firestoreService.borrar("autores", this.id);
+      console.log('Autor eliminado correctamente');
       this.document = {} as Autor;
-      this.router.navigate(['/home']);;
-    })
+      this.router.navigate(['/home']);
+    } catch (error) {
+      console.error('Error al eliminar el autor:', error);
+    }
+  }
+
+  public alertButtons = [
+  {
+    text: 'Cancelar',
+    role: 'cancel',
+    handler: () => {
+      console.log('Se canceló la eliminación');
+      this.router.navigate(['/home']);
+    },
+  },
+  {
+    text: 'Confirmar',
+    role: 'confirm',
+    handler: () => {
+      console.log('Se confirmó la eliminación');
+      this.clicBotonBorrar();
+    },
+  },
+];
+  
+  setResult(event: CustomEvent<OverlayEventDetail>) {
+    console.log(`Dismissed with role: ${event.detail.role}`);
   }
 
   clicBotonModificar() {

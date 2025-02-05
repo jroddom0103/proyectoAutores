@@ -60,7 +60,9 @@
   </ion-card>
 
   <div *ngIf="modoEdicion">
-    <ion-button (click)="clicBotonBorrar()" expand="full" color="danger">Borrar autor</ion-button>
+    <ion-button id="botonEliminar" (click)="clicBotonBorrar()" expand="full" color="danger">Borrar autor</ion-button>
+    <ion-alert trigger="botonEliminar" header="Alert!" [buttons]="alertButtons"
+      (didDismiss)="setResult($event)"></ion-alert>
     <ion-button (click)="clicBotonModificar()" expand="full" color="secondary">Modificar autor</ion-button>
   </div>
 
