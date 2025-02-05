@@ -18,8 +18,13 @@ export class DetallePage implements OnInit {
     id: "",
     data: {} as Autor
   };
+  dataAutorEditando: any;
+  esNuevo: false;
+  modoEdicion = false;
+  mostrarGuardar = false;
 
   constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router) { }
+  
 
   ngOnInit() {
 
@@ -30,16 +35,39 @@ export class DetallePage implements OnInit {
       this.id = "";
     }
 
-    this.firestoreService.consultarPorId("autores", this.id).subscribe((resultado: any) => {
-      if (resultado.payload.data() != null) {
-        this.document.id = resultado.payload.id
-        this.document.data = resultado.payload.data();
-        console.log(this.document.data.nombreCompleto);
-      } else {
-        this.document.data = {} as Autor;
-      }
+    const nuevo = this.activatedRoute.snapshot.paramMap.get('nuevo');
+    if(nuevo === 'true') {
+      this.modoEdicion = false;
+      this.mostrarGuardar = true;
+      this.document.data = {
+        nombreCompleto: '',
+        lugarNacimiento: '',
+        fechaNacimiento: '',
+        fechaDefuncion: '',
+        obrasNotables: '',
+        imagenURL: ''
+      };
+      return;
     }
-    )
+
+    this.mostrarGuardar = false;
+    this.firestoreService.consultarPorId("autores", this.id).subscribe({
+      next: (resultado: any) => {
+        if (resultado.payload.data()) {
+          this.document.id = resultado.payload.id;
+          this.document.data = resultado.payload.data();
+          this.modoEdicion = true;
+        } else {
+          this.modoEdicion = false;
+          this.mostrarGuardar = true;
+          this.document.data = {} as Autor;
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando autor:', error);
+        this.modoEdicion = false;
+      }
+    });
   }
 
   clicBotonBorrar() {
@@ -56,5 +84,15 @@ export class DetallePage implements OnInit {
       this.document = {} as Autor;
       this.router.navigate(['/home']);
     })
+  }
+
+  clicBotonInsertar() {
+    const autorNuevo: Autor = { ...this.document.data };
+    this.firestoreService.insertar("autores", autorNuevo)
+      .then(() => {
+        this.document = { id: "", data: {} as Autor };
+        this.router.navigate(['/home']);
+      })
+      .catch(error => console.error('Error:', error));
   }
 }

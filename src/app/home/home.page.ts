@@ -39,15 +39,8 @@ export class HomePage {
 
   }
 
-
-
   clicBotonInsertar() {
-    this.firestoreService.insertar("autores", this.autorEditando).then(() => {
-      console.log('Autor creado correctamente!');
-      this.autorEditando = {} as Autor;
-    }, (error) => {
-      console.error(error);
-    });
+    this.router.navigate(['/detalle','nuevo']);
   }
 
   obtenerListaAutores() {

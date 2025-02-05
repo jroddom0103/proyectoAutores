@@ -6,37 +6,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-item>
-    <ion-label>Nombre Completo</ion-label>
-    <ion-input [(ngModel)]="autorEditando.nombreCompleto"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Lugar de Nacimiento</ion-label>
-    <ion-input [(ngModel)]="autorEditando.lugarNacimiento"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Fecha de Nacimiento</ion-label>
-    <ion-input type="date" [(ngModel)]="autorEditando.fechaNacimiento"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Fecha de Defuncion</ion-label>
-    <ion-input type="date" [(ngModel)]="autorEditando.fechaDefuncion"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Obras Notables</ion-label>
-    <ion-input [(ngModel)]="autorEditando.obrasNotables"></ion-input>
-  </ion-item>
-  <ion-button (click)="clicBotonInsertar()">Añadir autor</ion-button>
-
-
-  <ion-item-divider></ion-item-divider>
-
   <h1>LISTA DE AUTORES ESPAÑOLES</h1>
 
   <ion-item-divider></ion-item-divider>
-
-
+<ion-content>
   <ion-grid>
     <ion-row>
       <ion-col size="2" *ngFor="let documentAutor of arrayColeccionAutores">
@@ -50,3 +23,5 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-fab-button (click)="clicBotonInsertar()" expand="full" color="secondary">Añadir</ion-fab-button>

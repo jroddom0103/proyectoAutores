@@ -14,30 +14,56 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <img src={{document.data.imagenURL}} height="200px" width="200px">
+        <img *ngIf="modoEdicion" src={{document.data.imagenURL}} height="200px" width="200px">
+        <div *ngIf="mostrarGuardar">
+          <ion-label position="stacked">URL de Imagen:</ion-label>
+          <ion-input [(ngModel)]="document.data.imagenURL"></ion-input>
+        </div>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Nombre Completo:</ion-label>
-        <ion-input value="{{document.data.nombreCompleto}}"></ion-input>
+        <ion-input [(ngModel)]="document.data.nombreCompleto" value="{{document.data.nombreCompleto}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Lugar de Nacimiento:</ion-label>
-        <ion-input value="{{document.data.lugarNacimiento}}"></ion-input>
+        <ion-input [(ngModel)]="document.data.lugarNacimiento" value="{{document.data.lugarNacimiento}}"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Fecha de Nacimiento:</ion-label>
-        <ion-input value="{{document.data.fechaNacimiento}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Fecha de Defunción:</ion-label>
-        <ion-input value="{{document.data.fechaDefuncion}}"></ion-input>
-      </ion-item>
+      <div *ngIf="modoEdicion">
+        <ion-item>
+          <ion-label position="stacked">Fecha de Nacimiento:</ion-label>
+          <ion-input [(ngModel)]="document.data.fechaNacimiento" value="{{document.data.fechaNacimiento}}"></ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="mostrarGuardar">
+        <ion-item>
+          <ion-label position="stacked">Fecha de Nacimiento:</ion-label>
+          <ion-input [(ngModel)]="document.data.fechaNacimiento" type="date"></ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="modoEdicion">
+        <ion-item>
+          <ion-label position="stacked">Fecha de Defunción:</ion-label>
+          <ion-input [(ngModel)]="document.data.fechaDefuncion" value="{{document.data.fechaDefuncion}}"></ion-input>
+        </ion-item>
+      </div>
+      <div *ngIf="mostrarGuardar">
+        <ion-item>
+          <ion-label position="stacked">Fecha de Defunción:</ion-label>
+          <ion-input [(ngModel)]="document.data.fechaDefuncion" type="date"></ion-input>
+        </ion-item>
+      </div>
       <ion-item>
         <ion-label position="stacked">Obras Notables:</ion-label>
-        <ion-input value="{{document.data.obrasNotables}}"></ion-input>
+        <ion-input [(ngModel)]="document.data.obrasNotables" value="{{document.data.obrasNotables}}"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-button (click)="clicBotonBorrar()" expand="full" color="danger">Borrar autor</ion-button>
-  <ion-button (click)="clicBotonModificar()" expand="full" color="secondary">Modificar autor</ion-button>
+
+  <div *ngIf="modoEdicion">
+    <ion-button (click)="clicBotonBorrar()" expand="full" color="danger">Borrar autor</ion-button>
+    <ion-button (click)="clicBotonModificar()" expand="full" color="secondary">Modificar autor</ion-button>
+  </div>
+
+  <ion-button *ngIf="mostrarGuardar" (click)="clicBotonInsertar()" expand="full" color="secondary">Guardar</ion-button>
+
 </ion-content>
