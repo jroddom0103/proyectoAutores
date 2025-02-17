@@ -90,15 +90,15 @@ export class DetallePage implements OnInit {
     role: 'cancel',
     handler: () => {
       console.log('Se canceló la eliminación');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/detalle/' + this.id]);
     },
   },
   {
     text: 'Confirmar',
     role: 'confirm',
-    handler: () => {
+    handler: async() => {
       console.log('Se confirmó la eliminación');
-      this.clicBotonBorrar();
+      await this.clicBotonBorrar();
     },
   },
 ];
